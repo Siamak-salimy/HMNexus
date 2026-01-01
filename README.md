@@ -30,13 +30,8 @@ HMNexus empowers biologists, clinicians, and researchers **without programming e
 1. Go to [Releases](https://github.com/Siamak-salimy/HMNexus/releases)
 2. Download the file for your OS:
    - 🪟 **Windows**: `HMNexus-*-Windows.exe`
-   - 🍏 **macOS**: `HMNexus-*-mac.dmg`
-   - 🐧 **Linux**: `HMNexus-*-Linux.tar.gz`
+   - 🍏 **macOS**: `Loading...`
+   - 🐧 **Linux**: `Loading...`
 3. Run it — no installation or Python required!
 
-### Option 2: Run from Source
-```bash
-git clone https://github.com/Siamak-salimy/HMNexus.git
-cd HMNexus
-pip install -r requirements.txt
-python main.py
+
