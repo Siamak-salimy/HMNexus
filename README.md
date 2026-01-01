@@ -4,100 +4,57 @@
 
 <div align="center">
 
-  
-
   <a href="https://github.com/Siamak-salimy/HMNexus">
-
-  <img src="https://img.shields.io/badge/GitHub_Repo-Siamak--salimy/HMNexus-181717?style=for-the-                  badge&logo=github&logoColor=white" alt="GitHub Repository"/>
-
+    <img src="https://img.shields.io/badge/GitHub_Repo-Siamak--salimy/HMNexus-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository"/>
   </a>
 
   <br/><br/>
 
   <a href="https://github.com/Siamak-salimy/HMNexus">
-
-  <img src="src/images/icon.ico" alt="Logo" width="80" height="80">
-
+    <img src="src/images/icon.ico" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">HMNexus</h3>
 
   <p align="center">
-
-  A high-speed, code-free GUI for downloading TCGA data.
-
-  <br />
-
-  <a href="https://siamak-salimy.github.io/HMNexus/"><strong>Explore the Website »</strong></a>
-
-  <br />
-
-  <br />
-
-  <a href="https://github.com/Siamak-salimy/HMNexus/releases">View Repositoty</a>
-
-  ·
-
-  <a href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=bug&template=bug_report.md&title=">Report Bug</a>
-
-  ·
-
-  <a href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=">Request Feature</a>
-
+    A high-speed, code-free GUI for downloading TCGA data.
+    <br />
+    <a href="https://siamak-salimy.github.io/HMNexus/"><strong>Explore the Website »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Siamak-salimy/HMNexus/releases">View Repository</a>
+    ·
+    <a href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=bug&template=bug_report.md&title=">Report Bug</a>
+    ·
+    <a href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=">Request Feature</a>
   </p>
-
 </div>
 
 <details>
-
   <summary>Table of Contents</summary>
-
   <ol>
-
-  <li>
-
-  <a href="#about-the-project">About The Project</a>
-
-  <ul>
-
-  <li><a href="#built-with">Built With</a></li>
-
-  <li><a href="#data-source">Data Source</a></li>
-
-  </ul>
-
-  </li>
-
-  <li>
-
-<a href="#getting-started">Getting Started</a>
-
-<ul>
-
-  <li><a href="#prerequisites">Prerequisites</a></li>
-
-  <li><a href="#installation">Installation</a></li>
-
-</ul>
-
-  </li>
-
-  <li><a href="#usage">Usage</a></li>
-
-  <li><a href="#roadmap">Roadmap</a></li>
-
-  <li><a href="#contributing">Contributing</a></li>
-
-  <li><a href="#development-team">Development Team</a></li>
-
-  <li><a href="#citation">Citation</a></li>
-
-  <li><a href="#license">License</a></li>
-
-  <li><a href="#contact">Contact</a></li>
-
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#data-source">Data Source</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#development-team">Development Team</a></li>
+    <li><a href="#citation">Citation</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
-
 </details>
 
 ## About The Project
@@ -215,6 +172,7 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 👨‍💻 Development Team
+
 - Siamak Salimy (Team Lead)
 - Amirmohammad Asgari
 - Mohammadreza Shahbazi
@@ -226,12 +184,15 @@ Don't forget to give the project a star! Thanks again!
 ---
 
 ## 📜 Citation
+
 If you use HMNexus in your academic research, please cite our paper:
+
 > Salimy S., Asgari A., Shahbazi M., Ghasemi A., & Mirzade M. (2025). HMNexus: A Tkinter GUI Platform for High-Speed, Code-Free TCGA Data Download. *BMC Bioinformatics*.
 
 ---
 
 ## 📄 License
+
 © 2025 HMNexus Project
 
 ## Contact
