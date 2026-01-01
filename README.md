@@ -203,7 +203,7 @@ Project Link: [https://github.com/Siamak-salimy/HMNexus](https://github.com/Siam
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[product-screenshot]: Images/project%20snapshot.png
+[product-screenshot]: src/images/project%20snapshot.png
 [Python.org]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://python.org
 [Tkinter-shield]: https://img.shields.io/badge/Tkinter-FFD43B?style=for-the-badge&logo=python&logoColor=blue
