@@ -1,219 +1,580 @@
-<a id="readme-top"></a>
-
-<div align="center" style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08); padding:20px; max-width:980px; margin:0 auto;">
-
-<a href="https://github.com/Siamak-salimy/HMNexus">
-  <img src="https://img.shields.io/badge/GitHub_Repo-Siamak--salimy/HMNexus-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository"/>
-</a>
-
-<br/><br/>
-
-<img src="src/images/TCGA_DL.jpg" alt="HMNexus Logo" width="300"/>
-
-  <h3 align="center">HMNexus</h3>
-
-  <p align="center">
-    A high-speed, code-free GUI for downloading TCGA data.
-    <br />
-    <a href="https://siamak-salimy.github.io/HMNexus/"><strong>Explore the Website »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/Siamak-salimy/HMNexus/releases">View Releases</a>
-    ·
-    <a href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=bug&template=bug_report.md&title=">Report Bug</a>
-    ·
-    <a href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=">Request Feature</a>
-  </p>
-</div>
-
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TCGA-DL: A Windows-based Tkinter Application for Manifest-Driven, Code-Free TCGA Data Retrieval</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{
+      --content-width:1100px;
+      --muted:#6b7280;
+      --purple: #6a5cff;
+      --purple-ghost: rgba(106,92,255,0.10);
+      --neon-rgb-day:9,132,227;
+      --neon-rgb-night:147,112,219;
+      --glass-alpha-day:0.06;
+      --glass-alpha-night:0.04;
+      --glass-border-day: rgba(0,0,0,0.06);
+      --glass-border-night: rgba(255,255,255,0.06);
+      --transition:260ms cubic-bezier(.2,.9,.3,1);
+      --logo-width-percent:40%;
+      --logo-max-width:520px;
+      --logo-height-mobile:220px;
+      --gold: #f6c85f;
+      --blue: #2563eb;
+      --card-radius:12px;
+      --bg-day: #ffffff;
+      --bg-night: #160725;
+      --success-green: #22c55e;
+    }
+    body.day {
+      --bg: var(--bg-day);
+      --text: #111827;
+      --glass-alpha: var(--glass-alpha-day);
+      --glass-border: var(--glass-border-day);
+      --neon-rgb: var(--neon-rgb-day);
+    }
+    body.night {
+      --bg: var(--bg-night);
+      --text: #f4f6fb;
+      --glass-alpha: var(--glass-alpha-night);
+      --glass-border: var(--glass-border-night);
+      --neon-rgb: var(--neon-rgb-night);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition: background var(--transition), color var(--transition);
+      padding:28px;
+      display:flex;
+      justify-content:center;
+      line-height:1.58;
+    }
+    .page {
+      width:100%;
+      max-width:var(--content-width);
+      padding:18px;
+    }
+    #readme-top { display:block; position:relative; top:0; left:0; }
+    .theme-toggle { position:fixed; top:18px; left:18px; z-index:9999; }
+    .theme-toggle button{
+      width:46px;height:46px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      display:flex;align-items:center;justify-content:center;cursor:pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .theme-toggle button:hover{ transform:translateY(-3px) }
+    .theme-toggle i{font-size:18px}
+    .theme-toggle .sun{color:#FFD166}
+    .theme-toggle .moon{color:#c9d1ff}
+    .hero { text-align:center; margin: 6px 0 24px }
+    .shield { margin-bottom:12px; display:inline-block }
+    .logo-frame {
+      margin: 0 auto 14px;
+      width: var(--logo-width-percent);
+      max-width: var(--logo-max-width);
+      height: auto;
+      border-radius:16px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(0,0,0,0.06);
+      background: rgba(0,0,0,0.03);
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+    body.night .logo-frame { background: #000; }
+    .logo-frame img { width:100%; height:auto; object-fit:contain; display:block; transition: transform 600ms ease, opacity 300ms ease; }
+    .site-title-box {
+      margin: 8px auto 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255, calc(var(--glass-alpha)-0.01)), rgba(255,255,255, calc(var(--glass-alpha)-0.04)));
+      border: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transition: transform var(--transition), box-shadow var(--transition);
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    body.night .site-title-box {
+      background: rgba(255,255,255, 0.03);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .tcga-pill {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background: linear-gradient(180deg, rgba(106,92,255,0.18), rgba(106,92,255,0.08));
+      border:1px solid rgba(106,92,255,0.22);
+      color:var(--purple);
+      font-weight:800;
+      box-shadow: 0 8px 26px rgba(106,92,255,0.10);
+      font-size:1rem;
+      white-space:nowrap;
+    }
+    .site-title-text {
+      color:var(--purple);
+      font-weight:700;
+      font-size:1rem;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    @media (max-width:880px){
+      .site-title-box { white-space:normal; }
+      .site-title-text { white-space:normal; font-size:0.95rem; text-align:center; }
+      .tcga-pill { font-size:0.95rem; }
+    }
+    .actions { display:flex; justify-content:center; gap:12px; margin-top:8px; flex-wrap:wrap; }
+    .glass-btn {
+      display:inline-flex; gap:10px; align-items:center; padding:10px 16px; border-radius:12px;
+      text-decoration:none; font-weight:700;
+      background: linear-gradient(180deg, rgba(255,255,255, calc(var(--glass-alpha) - 0.01)), rgba(255,255,255, calc(var(--glass-alpha) - 0.03)));
+      border: 1px solid var(--glass-border); color:var(--text);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    body.night .glass-btn { background: linear-gradient(180deg, rgba(255,255,255, calc(var(--glass-alpha) - 0.03)), rgba(255,255,255, calc(var(--glass-alpha) - 0.07))); border:1px solid rgba(255,255,255,0.04); }
+    .glass-btn:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 48px rgba(0,0,0,0.22), 0 0 18px rgba(var(--neon-rgb),0.06); }
+    details.summary-box { border-radius:12px; overflow:hidden; margin-bottom:12px; }
+    details summary { list-style:none; cursor:pointer; padding:10px; font-weight:700; background: linear-gradient(180deg, rgba(255,255,255, calc(var(--glass-alpha) - 0.02)), rgba(255,255,255, calc(var(--glass-alpha) - 0.04))); border:1px solid rgba(255,255,255,0.02); }
+    .card {
+      position:relative;
+      border-radius:var(--card-radius);
+      padding:22px 18px;
+      margin:20px 0;
+      background: linear-gradient(180deg, rgba(255,255,255, calc(var(--glass-alpha) - 0.02)), rgba(255,255,255, calc(var(--glass-alpha) - 0.05)));
+      border:1px solid rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px) saturate(110%);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.16) }
+    body.night .card { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); }
+    .back-top {
+      position:absolute;
+      top:12px;
+      right:12px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:10px;
+      text-decoration:none;
+      background: linear-gradient(90deg, var(--blue), #1e40af);
+      color: white;
+      font-weight:700;
+      border: 2px solid var(--gold);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+      transform: translateZ(0);
+      z-index: 40;
+    }
+    .back-top i { color: var(--gold); }
+    h2.section { margin:0 0 14px; color:var(--purple); }
+    pre { background: rgba(0,0,0,0.06); padding:12px; border-radius:8px; overflow:auto }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; }
+    .screenshot { margin:12px 0; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); display:flex; justify-content:center; }
+    .screenshot img { width:50%; max-width:520px; height:auto; display:block; object-fit:contain; }
+    @media (max-width:980px){ .screenshot img { width:80%; } }
+    .team-list { padding-left: 18px; list-style: none; margin:0; }
+    .team-list li { margin-bottom:8px; }
+    .team-list a {
+      color:var(--purple);
+      font-weight:700;
+      text-decoration:none;
+      padding:6px 8px;
+      border-radius:8px;
+      display:inline-block;
+      transition: background 180ms ease, transform 160ms ease, box-shadow 160ms ease;
+      box-shadow: inset 0 0 0 0 rgba(0,0,0,0);
+    }
+    .team-list a:hover {
+      background: var(--purple-ghost);
+      transform: translateY(-3px);
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(106,92,255,0.06);
+      cursor:pointer;
+    }
+    .role-pill {
+      background: rgba(246,200,95,0.12);
+      color: #ad6b00;
+      border:1px solid rgba(246,200,95,0.22);
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:0.85rem;
+      font-weight:700;
+      margin-left:8px;
+    }
+    .reveal { --tx:0px; --ty:0px; opacity:0; transform: translate(var(--tx), var(--ty)); transition: transform 1s cubic-bezier(.2,.9,.3,1), opacity 1s cubic-bezier(.2,.9,.3,1); will-change: transform, opacity; }
+    .reveal.revealed { opacity:1; transform: translate(0,0); }
+    footer { text-align:center; margin-top:28px; color:var(--muted) }
+    @media (max-width:980px){ .logo-frame { width:80%; max-width:720px; } }
+    @media (max-width:720px){ .logo-frame { height: var(--logo-height-mobile) } .page { padding:12px } .hero h1 { font-size:1.4rem } }
+    @media (max-width:420px){ .glass-btn { padding:9px 12px; font-size:0.95rem } .back-top { padding:7px 8px; font-size:0.9rem; top:8px; right:8px } }
+    a:focus, button:focus, summary:focus { outline: 3px solid rgba(var(--neon-rgb),0.12); outline-offset:3px }
+    .roadmap-list { padding-left:18px; margin:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .roadmap-item {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background: rgba(0,0,0,0.00);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .roadmap-item .label { font-weight:700; color:var(--text); }
+    .roadmap-item .status {
+      margin-left:auto;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:0.9rem;
+    }
+    .roadmap-item.completed {
+      background: linear-gradient(180deg, rgba(106,92,255,0.06), rgba(106,92,255,0.02));
+      border:1px solid rgba(106,92,255,0.14);
+      box-shadow: 0 10px 30px rgba(106,92,255,0.06);
+    }
+    .roadmap-item.completed .status {
+      background: linear-gradient(90deg, rgba(34,197,94,0.12), rgba(34,197,94,0.06));
+      color: var(--success-green);
+      border:1px solid rgba(34,197,94,0.12);
+      box-shadow: 0 8px 18px rgba(34,197,94,0.06);
+    }
+    .roadmap-item.pending .status {
+      background: rgba(0,0,0,0.04);
+      color: var(--muted);
+      border:1px solid rgba(0,0,0,0.03);
+    }
+  </style>
+</head>
+<body class="day">
+  <a id="readme-top"></a>
+  <div class="theme-toggle" title="Toggle day/night">
+    <button id="themeBtn" aria-pressed="false" aria-label="Toggle theme">
+      <i class="fas fa-sun sun" id="sunIcon" style="display:block"></i>
+      <i class="fas fa-moon moon" id="moonIcon" style="display:none"></i>
+    </button>
+  </div>
+  <main class="page" role="main" aria-labelledby="project-title">
+    <header class="hero" id="project-title">
+      <div class="shield">
+        <a href="https://github.com/Siamak-salimy/HMNexus" target="_blank" rel="noopener">
+          <img src="https://img.shields.io/badge/GitHub_Repo-Siamak--salimy/HMNexus-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository">
+        </a>
+      </div>
+      <div class="logo-frame" id="logoFrame" aria-hidden="false">
+        <img id="heroImage" class="reveal" src="src/Images/TCGA_DL.png" alt="HMNexus Logo">
+      </div>
+      <div class="site-title-box reveal" role="heading" aria-level="1">
+        <div class="tcga-pill">TCGA-DL</div>
+        <div class="site-title-text">: A Windows-based Tkinter Application for Manifest-Driven, Code-Free TCGA Data Retrieval</div>
+      </div>
+      <p class="lead reveal">A high-speed, code-free GUI for downloading TCGA data.</p>
+      <div class="actions" role="group" aria-label="Repository actions">
+        <a class="glass-btn reveal" id="btnRepo" href="https://github.com/Siamak-salimy/HMNexus" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i> View Repository
+        </a>
+        <a class="glass-btn reveal" id="btnBug" href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=bug&template=bug_report.md&title=" target="_blank" rel="noopener">
+          <i class="fas fa-bug"></i> Report Bug
+        </a>
+        <a class="glass-btn reveal" id="btnFeature" href="https://github.com/Siamak-salimy/HMNexus/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=" target="_blank" rel="noopener">
+          <i class="fas fa-lightbulb"></i> Request Feature
+        </a>
+      </div>
+    </header>
+    <details class="summary-box" open>
+      <summary class="reveal">Table of Contents</summary>
+      <div style="padding:8px">
+        <ol>
+          <li><a href="#about">About The Project</a></li>
+          <li><a href="#built">Built With</a></li>
+          <li><a href="#data">Data Source</a></li>
+          <li><a href="#getting-started">Getting Started</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#contributing">Contributing</a></li>
+          <li><a href="#team">Development Team</a></li>
+          <li><a href="#citation">Citation</a></li>
+          <li><a href="#license">License</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </div>
+    </details>
+    <section id="about" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">About The Project</h2>
+      <div class="screenshot">
+        <img id="projectSnapshot" src="src/images/project%20snapshot.png" alt="HMNexus Screenshot">
+      </div>
+      <p><strong>HMNexus</strong> is a cross-platform desktop application designed to eliminate the technical barriers in accessing The Cancer Genome Atlas (TCGA) data. Traditional methods require command-line expertise and scripting, making them inaccessible for many biologists, clinicians, and medical researchers. HMNexus solves this problem by providing a fully graphical, intuitive, and powerful tool that requires zero coding.</p>
+      <p>Here's why HMNexus is a game-changer:</p>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
-        <li><a href="#data-source">Data Source</a></li>
+        <li><strong>Accessibility:</strong> Empowers researchers without a programming background to independently download and manage massive genomic datasets.</li>
+        <li><strong>Efficiency:</strong> Accelerates the data acquisition phase of research with high-speed, parallel downloads, saving valuable time.</li>
+        <li><strong>Simplicity:</strong> Transforms a complex workflow into a simple, three-step process: select, import, and download.</li>
       </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+    </section>
+    <section id="built" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Built With</h2>
+      <p>This project was built using Python and the native Tkinter library, ensuring it is lightweight and cross-platform.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+        <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python badge" style="height:32px;">
+        <img src="https://img.shields.io/badge/Tkinter-FFD43B?style=for-the-badge&logo=python&logoColor=blue" alt="Tkinter badge" style="height:32px;">
+      </div>
+    </section>
+    <section id="data" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Data Source</h2>
+      <p>All data is sourced from the official NCI portals. You can download your data manifest from the <strong>Genomic Data Commons (GDC) Portal</strong>, and then use our app to download the files.</p>
+      <div class="muted" style="margin-top:8px">The Cancer Genome Atlas (TCGA) Program</div>
+    </section>
+    <section id="getting-started" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Getting Started</h2>
+      <p>Follow these instructions to get a copy of HMNexus up and running on your local machine.</p>
+      <h3 class="reveal" style="margin-top:12px">Prerequisites</h3>
+      <p>To run the application from the source code, you will need Python 3.9+ and pip.</p>
+      <p><strong>Python & pip</strong> — You can download Python from the <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">official website</a>. Pip comes bundled with Python 3.9+.</p>
+      <h3 class="reveal" style="margin-top:12px">Installation</h3>
+      <p>You can either download the standalone executable (recommended for most users) or run from the source code.</p>
+      <ol>
+        <li><strong>Standalone Executable (Recommended)</strong>
+          <ul>
+            <li>Go to the <a href="https://github.com/Siamak-salimy/HMNexus/releases" target="_blank" rel="noopener">Releases Page</a>.</li>
+            <li>Download the executable file for your operating system (.exe for Windows, .dmg for macOS, or the Linux binary).</li>
+            <li>Run the application. No further installation is needed!</li>
+          </ul>
+        </li>
+        <li><strong>From Source Code</strong>
+          <ol>
+            <li><code>git clone https://github.com/Siamak-salimy/HMNexus.git</code></li>
+            <li><code>cd HMNexus</code></li>
+            <li><code>pip install -r requirements.txt</code></li>
+            <li><code>python main.py</code></li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+    <section id="usage" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Usage</h2>
+      <p>HMNexus is designed to be as intuitive as possible. The main workflow consists of:</p>
+      <ol>
+        <li><strong>Filtering Data:</strong> Use the dropdown menus to select the cancer type and data category you are interested in.</li>
+        <li><strong>Importing a Manifest:</strong> Click "Import Manifest" to load a manifest file downloaded from the GDC Data Portal.</li>
+        <li><strong>Downloading:</strong> Click "Start Download" to begin the high-speed download process. Your files will be automatically organized into structured directories.</li>
+      </ol>
+      <p>For more detailed examples and tutorials, please refer to the <a href="https://siamak-salimy.github.io/HMNexus/" target="_blank" rel="noopener">Project Website</a>.</p>
+    </section>
+    <section id="roadmap" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Roadmap</h2>
+      <ul class="roadmap-list">
+        <li class="roadmap-item completed">
+          <div class="label">Core GUI for data filtering and download</div>
+          <div class="status"><i class="fas fa-check-circle"></i> Done</div>
+        </li>
+        <li class="roadmap-item completed">
+          <div class="label">Concurrent, high-speed download engine</div>
+          <div class="status"><i class="fas fa-check-circle"></i> Done</div>
+        </li>
+        <li class="roadmap-item completed">
+          <div class="label">MD5 checksum validation</div>
+          <div class="status"><i class="fas fa-check-circle"></i> Done</div>
+        </li>
+        <li class="roadmap-item completed">
+          <div class="label">Windows Standalone Executable</div>
+          <div class="status"><i class="fas fa-check-circle"></i> Done</div>
+        </li>
+        <li class="roadmap-item pending">
+          <div class="label">Support for macOS and Linux executables</div>
+          <div class="status">Planned</div>
+        </li>
+        <li class="roadmap-item pending">
+          <div class="label">Integration with GDC API for direct data cart management</div>
+          <div class="status">Planned</div>
+        </li>
       </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#development-team">Development Team</a></li>
-    <li><a href="#citation">Citation</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+      <p class="muted">See the <a href="https://github.com/Siamak-salimy/HMNexus/issues" target="_blank" rel="noopener">open issues</a> for a full list of proposed features (and known issues).</p>
+    </section>
+    <section id="contributing" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Contributing</h2>
+      <p>Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are <strong>greatly appreciated</strong>.</p>
+      <p>If you have a suggestion that would make this better, please <a href="https://github.com/Siamak-salimy/HMNexus/fork" target="_blank" rel="noopener">fork the repo</a> and create a pull request. You can also simply <a href="https://github.com/Siamak-salimy/HMNexus/issues/new/choose" target="_blank" rel="noopener">open an issue</a> with the tag "enhancement".</p>
+      <ol>
+        <li>Fork the Project</li>
+        <li>Create your Feature Branch</li>
+        <li>Commit your Changes</li>
+        <li>Push to the Branch</li>
+        <li>Open a Pull Request</li>
+      </ol>
+    </section>
+    <section id="team" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Development Team</h2>
+      <ul class="team-list">
+        <li>
+          <a href="https://www.linkedin.com/in/siamaksalimy/" target="_blank" rel="noopener">Siamak Salimy</a>
+          <span class="role-pill">(Team Lead)</span>
+        </li>
+        <li><a href="https://www.linkedin.com/in/amirmohammadasgari/" target="_blank" rel="noopener">Amirmohammad Asgari</a></li>
+        <li><a href="https://www.linkedin.com/in/mohammadreza-shahbazi-313sh/" target="_blank" rel="noopener">Mohammadreza Shahbazi</a></li>
+        <li><a href="https://www.linkedin.com/in/abolfazl-ghasemi55/" target="_blank" rel="noopener">Abolfazl Ghasemi</a></li>
+        <li><a href="https://www.linkedin.com/in/mahan-mirzade-2135623a2/" target="_blank" rel="noopener">Mahan Mirzade</a></li>
+      </ul>
+    </section>
+    <section id="citation" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">📜 Citation</h2>
+      <p>If you use HMNexus in your academic research, please cite our paper:</p>
+      <blockquote>
+        Salimy S., Asgari A., Shahbazi M., Ghasemi A., & Mirzade M. (2025). HMNexus: A Tkinter GUI Platform for High-Speed, Code-Free TCGA Data Download. <em>BMC Bioinformatics</em>.
+      </blockquote>
+    </section>
+    <section id="license" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">📄 License</h2>
+      <p>© 2026 HMNexus Project</p>
+      <pre><code>MIT License
 
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## About The Project
+Copyright (c) 2026 HMNexus Project
 
-<a href="https://siamak-salimy.github.io/HMNexus/">
-  <img src="src/images/project_snapshot.png" alt="HMNexus Screenshot" width="600"/>
-</a>
-
-**HMNexus** is a cross-platform desktop application designed to eliminate the technical barriers in accessing The Cancer Genome Atlas (TCGA) data. Traditional methods require command-line expertise and scripting, making them inaccessible for many biologists, clinicians, and medical researchers. HMNexus solves this problem by providing a fully graphical, intuitive, and powerful tool that requires zero coding.
-
-Here's why HMNexus is a game-changer:
-
-* **Accessibility:** Empowers researchers without a programming background to independently download and manage large genomic datasets.
-* **Efficiency:** Accelerates the data acquisition phase of research with high-speed, parallel downloads, saving valuable time.
-* **Simplicity:** Transforms a complex workflow into a simple, three-step process: select, import, and download.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-### Built With
-
-This project was built using Python and the native Tkinter library, ensuring it is lightweight and cross-platform.
-
-* <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" height="22"/> [Python](https://python.org)
-* <img src="https://img.shields.io/badge/Tkinter-FFD43B?style=for-the-badge&logo=python&logoColor=blue" alt="Tkinter" height="22"/> [Tkinter Docs](https://docs.python.org/3/library/tkinter.html)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-### Data Source
-
-All data is sourced from the official NCI portals. You can download your data manifest from the **Genomic Data Commons (GDC) Portal**, and then use our app to download the files.
-
-* <img src="https://img.shields.io/badge/The_Cancer_Genome_Atlas_(TCGA)-0A539C?style=flat&logo=cancerresearch&logoColor=white" alt="TCGA" height="18"/> [GDC / TCGA](https://www.cancer.gov/tcga)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## Getting Started
-
-Follow these instructions to get a copy of HMNexus up and running on your local machine.
-
-### Prerequisites
-
-To run the application from the source code, you will need Python 3.9+ and pip.
-
-* **Python & pip**
-  You can download Python from the [official website](https://www.python.org/downloads/). Pip comes bundled with Python 3.9+.
-
-### Installation
-
-You can either download the standalone executable (recommended for most users) or run from the source code.
-
-1. **Standalone Executable (Recommended)**
-   - Go to the **[Releases Page](https://github.com/Siamak-salimy/HMNexus/releases)**.
-   - Download the executable file for your operating system (`.exe` for Windows, `.dmg` for macOS, or the Linux binary).
-   - Run the application. No further installation is needed!
-
-2. **From Source Code**
-   - Clone the repo
-     ```sh
-     git clone https://github.com/Siamak-salimy/HMNexus.git
-     ```
-   - Navigate to the project directory
-     ```sh
-     cd HMNexus
-     ```
-   - Install required packages
-     ```sh
-     pip install -r requirements.txt
-     ```
-   - Run the application
-     ```sh
-     python main.py
-     ```
-</div>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## Usage
-
-HMNexus is designed to be as intuitive as possible. The main workflow consists of:
-
-1.  **Filtering Data**: Use the dropdown menus to select the cancer type and data category you are interested in.
-2.  **Importing a Manifest**: Click "Import Manifest" to load a manifest file downloaded from the GDC Data Portal.
-3.  **Downloading**: Click "Start Download" to begin the high-speed download process. Your files will be automatically organized into structured directories.
-
-For more detailed examples and tutorials, please refer to the **[Project Website](https://siamak-salimy.github.io/HMNexus/)**.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div id="roadmap" style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## Roadmap
-
-<ul style="list-style:none; padding-left:0; line-height:1.9;">
-  <li><span style="color:#2ecc71; font-weight:700; margin-right:8px;">✓</span> <strong>Core GUI for data filtering and download</strong></li>
-  <li><span style="color:#2ecc71; font-weight:700; margin-right:8px;">✓</span> <strong>Concurrent, high-speed download engine</strong></li>
-  <li><span style="color:#2ecc71; font-weight:700; margin-right:8px;">✓</span> <strong>MD5 checksum validation</strong></li>
-  <li><span style="color:#2ecc71; font-weight:700; margin-right:8px;">✓</span> <strong>Windows Standalone Executable</strong></li>
-  <li><span style="color:#aaaaaa; font-weight:700; margin-right:8px;">◻</span> Support for macOS and Linux executables</li>
-  <li><span style="color:#aaaaaa; font-weight:700; margin-right:8px;">◻</span> Integration with GDC API for direct data cart management</li>
-</ul>
-
-<p style="margin-top:8px;">See the <a href="https://github.com/Siamak-salimy/HMNexus/issues">open issues</a> for a full list of proposed features (and known issues).</p>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## Contributing
-
-Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please [fork the repo](https://github.com/Siamak-salimy/HMNexus/fork) and create a pull request. You can also simply [open an issue](https://github.com/Siamak-salimy/HMNexus/issues/new/choose) with the tag "enhancement".
-
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch 
-3. Commit your Changes 
-4. Push to the Branch 
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## 👨‍💻 Development Team
-
-- Siamak Salimy (Team Lead)
-- Amirmohammad Asgari
-- Mohammadreza Shahbazi
-- Abolfazl Ghasemi
-- Mahan Mirzade
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## 📜 Citation
-
-If you use HMNexus in your academic research, please cite our paper:
-
-> Salimy S., Asgari A., Shahbazi M., Ghasemi A., & Mirzade M. (2025). HMNexus: A Tkinter GUI Platform for High-Speed, Code-Free TCGA Data Download. *BMC Bioinformatics*.
-
-</div>
-
-<div style="background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.6); border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); padding:18px; margin:18px 0;">
-## 📄 License
-
-© 2025 HMNexus Project
-
-## Contact
-
-Siamak Salimy - [siamak.salimy@gmail.com](mailto:siamak.salimy@gmail.com)
-
-Project Link: [https://github.com/Siamak-salimy/HMNexus](https://github.com/Siamak-salimy/HMNexus)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-</div>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+</code></pre>
+    </section>
+    <section id="contact" class="card">
+      <a class="back-top" href="#readme-top" title="Back to top"><i class="fas fa-arrow-up"></i> Back to top</a>
+      <h2 class="section reveal">Contact</h2>
+      <p>Siamak Salimy - <a href="mailto:siamak.salimy@gmail.com">siamak.salimy@gmail.com</a></p>
+      <p>Project Link: <a href="https://github.com/Siamak-salimy/HMNexus" target="_blank" rel="noopener">https://github.com/Siamak-salimy/HMNexus</a></p>
+    </section>
+    <footer>
+      <div style="max-width:var(--content-width);margin:0 auto;">
+        <div style="font-weight:700">© 2026 HMNexus Project</div>
+      </div>
+    </footer>
+  </main>
+  <script>
+    (function(){
+      const KEY = 'hmn_theme_pref_final';
+      const body = document.body;
+      const btn = document.getElementById('themeBtn');
+      const sunIcon = document.getElementById('sunIcon');
+      const moonIcon = document.getElementById('moonIcon');
+      const heroImage = document.getElementById('heroImage');
+      const logoFrame = document.getElementById('logoFrame');
+      const DAY_SRC = "src/Images/TCGA_DL.png";
+      const NIGHT_SRC = "src/Images/TCGA-DL-night.png";
+      const saved = localStorage.getItem(KEY);
+      if (saved === 'night' || saved === 'day') {
+        body.classList.remove('day','night');
+        body.classList.add(saved);
+      } else {
+        body.classList.remove('day','night');
+        body.classList.add('day');
+        localStorage.setItem(KEY, 'day');
+      }
+      applyTheme();
+      btn.addEventListener('click', () => {
+        const next = body.classList.contains('night') ? 'day' : 'night';
+        body.classList.remove('day','night');
+        body.classList.add(next);
+        localStorage.setItem(KEY, next);
+        applyTheme();
+      });
+      function applyTheme(){
+        const isNight = body.classList.contains('night');
+        sunIcon.style.display = isNight ? 'none' : 'block';
+        moonIcon.style.display = isNight ? 'block' : 'none';
+        heroImage.src = isNight ? NIGHT_SRC : DAY_SRC;
+      }
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const href = a.getAttribute('href');
+          if (!href || href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({behavior:'smooth', block:'start'});
+            history.replaceState(null, '', href);
+          }
+        });
+      });
+      const revealEls = Array.from(document.querySelectorAll('.reveal'));
+      const directions = ['left','right','top','bottom'];
+      revealEls.forEach(el => {
+        const dir = directions[Math.floor(Math.random()*directions.length)];
+        let tx='0px', ty='0px';
+        const distance = 120 + Math.floor(Math.random()*80);
+        if (dir === 'left') tx = `-${distance}px`;
+        if (dir === 'right') tx = `${distance}px`;
+        if (dir === 'top') ty = `-${distance}px`;
+        if (dir === 'bottom') ty = `${distance}px`;
+        el.style.setProperty('--tx', tx);
+        el.style.setProperty('--ty', ty);
+      });
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => observer.observe(el));
+      const snapshot = document.getElementById('projectSnapshot');
+      if (snapshot) {
+        snapshot.addEventListener('error', function handleError() {
+          const candidates = [
+            "src/images/project%20snapshot.png",
+            "src/images/project snapshot.png",
+            "src/Images/project%20snapshot.png",
+            "src/Images/project snapshot.png",
+            "https://raw.githubusercontent.com/Siamak-salimy/HMNexus/main/src/images/project%20snapshot.png",
+            "https://raw.githubusercontent.com/abolfazlghasemi83/HMNexus/main/src/images/project%20snapshot.png"
+          ];
+          if (!snapshot._tryIndex && snapshot._tryIndex !== 0) snapshot._tryIndex = 0;
+          else snapshot._tryIndex++;
+          if (snapshot._tryIndex >= candidates.length) {
+            snapshot.alt = "Screenshot not available";
+            snapshot.style.width = '80%';
+            snapshot.onerror = null;
+            return;
+          }
+          snapshot.onerror = handleError;
+          snapshot.src = candidates[snapshot._tryIndex];
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase()==='t' && e.ctrlKey && e.shiftKey) btn.click();
+      });
+    })();
+  </script>
+</body>
+</html>
