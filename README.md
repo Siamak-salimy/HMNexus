@@ -197,7 +197,7 @@ If you use HMNexus in your academic research, please cite our paper:
 
 ## Contact
 
-Siamak Salimy - [siamak.salimy@gmail.com](mailto:siamak.salimy@gmail.com)
+Siamak Salimy - [salimy@ut.ac.ir](mailto:salimy@ut.ac.ir)
 
 Project Link: [https://github.com/Siamak-salimy/HMNexus](https://github.com/Siamak-salimy/HMNexus)
 
