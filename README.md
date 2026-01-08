@@ -59,9 +59,12 @@
 
 ## About The Project
 
-<a href="https://siamak-salimy.github.io/HMNexus/">
-  <img src="src/images/project%20snapshot.png" alt="HMNexus Screenshot" width="600"/>
-</a>
+<div align="center">
+  <a href="https://siamak-salimy.github.io/HMNexus/">
+    <img src="src/images/project%20snapshot.png" alt="HMNexus Screenshot" width="600"/>
+  </a>
+</div>
+
 
 **HMNexus** is a cross-platform desktop application designed to eliminate the technical barriers in accessing The Cancer Genome Atlas (TCGA) data. Traditional methods require command-line expertise and scripting, making them inaccessible for many biologists, clinicians, and medical researchers. HMNexus solves this problem by providing a fully graphical, intuitive, and powerful tool that requires zero coding.
 
